@@ -1,4 +1,4 @@
-package handler
+package controller
 
 import (
 	"github.com/Vardan1995/go_api/database"

@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/Vardan1995/go_api/handler"
+	"github.com/Vardan1995/go_api/controller"
 	"github.com/Vardan1995/go_api/middleware"
 
 	"github.com/gofiber/fiber/v2"
@@ -12,23 +12,23 @@ import (
 func SetupRoutes(app *fiber.App) {
 	// Middleware
 	api := app.Group("/api", logger.New())
-	api.Get("/", handler.Hello)
+	api.Get("/", controller.Hello)
 
 	// Auth
 	auth := api.Group("/auth")
-	auth.Post("/login", handler.Login)
+	auth.Post("/login", controller.Login)
 
 	// User
 	user := api.Group("/user")
-	user.Get("/:id", handler.GetUser)
-	user.Post("/", handler.CreateUser)
-	user.Patch("/:id", middleware.Protected(), handler.UpdateUser)
-	user.Delete("/:id", middleware.Protected(), handler.DeleteUser)
+	user.Get("/:id", controller.GetUser)
+	user.Post("/", controller.CreateUser)
+	user.Patch("/:id", middleware.Protected(), controller.UpdateUser)
+	user.Delete("/:id", middleware.Protected(), controller.DeleteUser)
 
 	// Product
 	product := api.Group("/product")
-	product.Get("/", handler.GetAllProducts)
-	product.Get("/:id", handler.GetProduct)
-	product.Post("/", middleware.Protected(), handler.CreateProduct)
-	product.Delete("/:id", middleware.Protected(), handler.DeleteProduct)
+	product.Get("/", controller.GetAllProducts)
+	product.Get("/:id", controller.GetProduct)
+	product.Post("/", middleware.Protected(), controller.CreateProduct)
+	product.Delete("/:id", middleware.Protected(), controller.DeleteProduct)
 }
