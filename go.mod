@@ -1,5 +1,6 @@
 module github.com/Vardan1995/go_api
 
+// +heroku goVersion go1.15
 go 1.15
 
 require (

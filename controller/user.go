@@ -25,11 +25,7 @@ func validToken(t *jwt.Token, id string) bool {
 	claims := t.Claims.(jwt.MapClaims)
 	uid := int(claims["user_id"].(float64))
 
-	if uid != n {
-		return false
-	}
-
-	return true
+	return uid == n
 }
 
 func validUser(id string, p string) bool {
@@ -55,6 +51,19 @@ func GetUser(c *fiber.Ctx) error {
 		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "No user found with ID", "data": nil})
 	}
 	return c.JSON(fiber.Map{"status": "success", "message": "Product found", "data": user})
+}
+
+// GetUser get  users
+func GetUsers(c *fiber.Ctx) error { //aaaaaaaaaaaaa
+
+	db := database.DB
+
+	var users []model.User
+	db.Find(&users)
+	if users[0].Username == "" {
+		return c.Status(404).JSON(fiber.Map{"status": "error", "message": "No user found", "data": nil})
+	}
+	return c.JSON(fiber.Map{"status": "success", "message": "Product found", "data": users})
 }
 
 // CreateUser new user
